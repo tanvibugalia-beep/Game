@@ -1,0 +1,388 @@
+{
+  "__guest_guest_8d66__": {
+    "username": "Guest_8D66",
+    "pwd_hash": "",
+    "salt_hex": "",
+    "created_at": "guest",
+    "profile": {
+      "username": "Guest_8D66",
+      "is_guest": true,
+      "level": 1,
+      "xp": 0,
+      "xp_next": 1000,
+      "rank_name": "Bronze",
+      "rank_score": 0,
+      "coins": 500,
+      "diamonds": 0,
+      "selected_character": "Daksh",
+      "selected_weapon": "Crimson Blaze",
+      "equipped_weapons": {
+        "AR": "Crimson Blaze",
+        "SMG": "Cobra MP5",
+        "Shotgun": "Thunder SPAS",
+        "Pistol": "Tactical G18",
+        "Sniper": "Shadow Kar98k"
+      },
+      "inventory": [
+        "Crimson Blaze",
+        "Cobra MP5",
+        "Thunder SPAS",
+        "Tactical G18",
+        "Shadow Kar98k",
+        "item_helmet",
+        "item_vest",
+        "item_backpack",
+        "item_medkit"
+      ],
+      "equipped_emotes": [
+        "Wave",
+        "Thumbs Up",
+        "Celebration",
+        "Dance"
+      ],
+      "matches_played": 0,
+      "wins": 0,
+      "kills": 0,
+      "mail_claimed": false,
+      "settings": {
+        "mouse_sens": 0.2,
+        "vol_master": 0.7,
+        "vol_music": 0.5,
+        "vol_sfx": 0.8,
+        "graphics_preset": "Normal",
+        "fps_cap": 60
+      }
+    }
+  },
+  "playerone": {
+    "username": "PlayerOne",
+    "pwd_hash": "24a74c7ea3ac68291905284985b0f78586e829ce695d1499758065a158295524",
+    "salt_hex": "c3da29d335bc24f9e8af4f5bbc0667c7",
+    "created_at": "693edf35",
+    "profile": {
+      "username": "PlayerOne",
+      "is_guest": false,
+      "level": 1,
+      "xp": 550,
+      "xp_next": 1000,
+      "rank_name": "Bronze",
+      "rank_score": 35,
+      "coins": 1140,
+      "diamonds": 0,
+      "selected_character": "Daksh",
+      "selected_weapon": "Crimson Blaze",
+      "equipped_weapons": {
+        "AR": "Crimson Blaze",
+        "SMG": "Cobra MP5",
+        "Shotgun": "Thunder SPAS",
+        "Pistol": "Tactical G18",
+        "Sniper": "Shadow Kar98k"
+      },
+      "inventory": [
+        "Crimson Blaze",
+        "Cobra MP5",
+        "Thunder SPAS",
+        "Tactical G18",
+        "Shadow Kar98k",
+        "item_helmet",
+        "item_vest",
+        "item_backpack",
+        "item_medkit"
+      ],
+      "equipped_emotes": [
+        "Wave",
+        "Thumbs Up",
+        "Celebration",
+        "Dance"
+      ],
+      "matches_played": 1,
+      "wins": 1,
+      "kills": 3,
+      "mail_claimed": false,
+      "settings": {
+        "mouse_sens": 0.2,
+        "vol_master": 0.7,
+        "vol_music": 0.5,
+        "vol_sfx": 0.8,
+        "graphics_preset": "Normal",
+        "fps_cap": 60
+      }
+    }
+  },
+  "__guest_guest_65af__": {
+    "username": "Guest_65AF",
+    "pwd_hash": "",
+    "salt_hex": "",
+    "created_at": "guest",
+    "profile": {
+      "username": "Guest_65AF",
+      "is_guest": true,
+      "level": 1,
+      "xp": 0,
+      "xp_next": 1000,
+      "rank_name": "Bronze",
+      "rank_score": 0,
+      "coins": 500,
+      "diamonds": 0,
+      "selected_character": "Daksh",
+      "selected_weapon": "Crimson Blaze",
+      "equipped_weapons": {
+        "AR": "Crimson Blaze",
+        "SMG": "Cobra MP5",
+        "Shotgun": "Thunder SPAS",
+        "Pistol": "Tactical G18",
+        "Sniper": "Shadow Kar98k"
+      },
+      "inventory": [
+        "Crimson Blaze",
+        "Cobra MP5",
+        "Thunder SPAS",
+        "Tactical G18",
+        "Shadow Kar98k",
+        "item_helmet",
+        "item_vest",
+        "item_backpack",
+        "item_medkit"
+      ],
+      "equipped_emotes": [
+        "Wave",
+        "Thumbs Up",
+        "Celebration",
+        "Dance"
+      ],
+      "matches_played": 0,
+      "wins": 0,
+      "kills": 0,
+      "mail_claimed": false,
+      "settings": {
+        "mouse_sens": 0.2,
+        "vol_master": 0.7,
+        "vol_music": 0.5,
+        "vol_sfx": 0.8,
+        "graphics_preset": "Normal",
+        "fps_cap": 60
+      }
+    }
+  },
+  "__guest_guest_e08e__": {
+    "username": "Guest_E08E",
+    "pwd_hash": "",
+    "salt_hex": "",
+    "created_at": "guest",
+    "profile": {
+      "username": "Guest_E08E",
+      "is_guest": true,
+      "level": 1,
+      "xp": 0,
+      "xp_next": 1000,
+      "rank_name": "Bronze",
+      "rank_score": 0,
+      "coins": 500,
+      "diamonds": 0,
+      "selected_character": "Daksh",
+      "selected_weapon": "Crimson Blaze",
+      "equipped_weapons": {
+        "AR": "Crimson Blaze",
+        "SMG": "Cobra MP5",
+        "Shotgun": "Thunder SPAS",
+        "Pistol": "Tactical G18",
+        "Sniper": "Shadow Kar98k"
+      },
+      "inventory": [
+        "Crimson Blaze",
+        "Cobra MP5",
+        "Thunder SPAS",
+        "Tactical G18",
+        "Shadow Kar98k",
+        "item_helmet",
+        "item_vest",
+        "item_backpack",
+        "item_medkit"
+      ],
+      "equipped_emotes": [
+        "Wave",
+        "Thumbs Up",
+        "Celebration",
+        "Dance"
+      ],
+      "matches_played": 0,
+      "wins": 0,
+      "kills": 0,
+      "mail_claimed": false,
+      "settings": {
+        "mouse_sens": 0.2,
+        "vol_master": 0.7,
+        "vol_music": 0.5,
+        "vol_sfx": 0.8,
+        "graphics_preset": "Normal",
+        "fps_cap": 60
+      }
+    }
+  },
+  "__guest_guest_7c99__": {
+    "username": "Guest_7C99",
+    "pwd_hash": "",
+    "salt_hex": "",
+    "created_at": "guest",
+    "profile": {
+      "username": "Guest_7C99",
+      "is_guest": true,
+      "level": 1,
+      "xp": 0,
+      "xp_next": 1000,
+      "rank_name": "Bronze",
+      "rank_score": 0,
+      "coins": 500,
+      "diamonds": 0,
+      "selected_character": "Daksh",
+      "selected_weapon": "Crimson Blaze",
+      "equipped_weapons": {
+        "AR": "Crimson Blaze",
+        "SMG": "Cobra MP5",
+        "Shotgun": "Thunder SPAS",
+        "Pistol": "Tactical G18",
+        "Sniper": "Shadow Kar98k"
+      },
+      "inventory": [
+        "Crimson Blaze",
+        "Cobra MP5",
+        "Thunder SPAS",
+        "Tactical G18",
+        "Shadow Kar98k",
+        "item_helmet",
+        "item_vest",
+        "item_backpack",
+        "item_medkit"
+      ],
+      "equipped_emotes": [
+        "Wave",
+        "Thumbs Up",
+        "Celebration",
+        "Dance"
+      ],
+      "matches_played": 0,
+      "wins": 0,
+      "kills": 0,
+      "mail_claimed": false,
+      "settings": {
+        "mouse_sens": 0.2,
+        "vol_master": 0.7,
+        "vol_music": 0.5,
+        "vol_sfx": 0.8,
+        "graphics_preset": "Normal",
+        "fps_cap": 60
+      }
+    }
+  },
+  "__guest_guest_f10c__": {
+    "username": "Guest_F10C",
+    "pwd_hash": "",
+    "salt_hex": "",
+    "created_at": "guest",
+    "profile": {
+      "username": "Guest_F10C",
+      "is_guest": true,
+      "level": 1,
+      "xp": 0,
+      "xp_next": 1000,
+      "rank_name": "Bronze",
+      "rank_score": 0,
+      "coins": 500,
+      "diamonds": 0,
+      "selected_character": "Daksh",
+      "selected_weapon": "Crimson Blaze",
+      "equipped_weapons": {
+        "AR": "Crimson Blaze",
+        "SMG": "Cobra MP5",
+        "Shotgun": "Thunder SPAS",
+        "Pistol": "Tactical G18",
+        "Sniper": "Shadow Kar98k"
+      },
+      "inventory": [
+        "Crimson Blaze",
+        "Cobra MP5",
+        "Thunder SPAS",
+        "Tactical G18",
+        "Shadow Kar98k",
+        "item_helmet",
+        "item_vest",
+        "item_backpack",
+        "item_medkit"
+      ],
+      "equipped_emotes": [
+        "Wave",
+        "Thumbs Up",
+        "Celebration",
+        "Dance"
+      ],
+      "matches_played": 0,
+      "wins": 0,
+      "kills": 0,
+      "mail_claimed": false,
+      "settings": {
+        "mouse_sens": 0.2,
+        "vol_master": 0.7,
+        "vol_music": 0.5,
+        "vol_sfx": 0.8,
+        "graphics_preset": "Normal",
+        "fps_cap": 60
+      }
+    }
+  },
+  "__guest_daksh_battle__": {
+    "username": "Daksh_Battle",
+    "pwd_hash": "",
+    "salt_hex": "",
+    "created_at": "guest",
+    "profile": {
+      "username": "Daksh_Battle",
+      "is_guest": true,
+      "is_logged_in": true,
+      "level": 4,
+      "xp": 1498,
+      "xp_next": 1952,
+      "rank_name": "Bronze",
+      "rank_score": 315,
+      "coins": 6530,
+      "diamonds": 45,
+      "selected_character": "Anya",
+      "selected_weapon": "Shadow Kar98k",
+      "equipped_weapons": {
+        "AR": "Crimson Blaze",
+        "SMG": "Cobra MP5",
+        "Shotgun": "Thunder SPAS",
+        "Pistol": "Tactical G18",
+        "Sniper": "Shadow Kar98k"
+      },
+      "inventory": [
+        "Crimson Blaze",
+        "Cobra MP5",
+        "Thunder SPAS",
+        "Tactical G18",
+        "Shadow Kar98k",
+        "item_helmet",
+        "item_vest",
+        "item_backpack",
+        "item_medkit"
+      ],
+      "equipped_emotes": [
+        "Wave",
+        "Thumbs Up",
+        "Celebration",
+        "Dance"
+      ],
+      "matches_played": 9,
+      "wins": 9,
+      "kills": 36,
+      "mail_claimed": false,
+      "settings": {
+        "mouse_sens": 0.2,
+        "vol_master": 0.7,
+        "vol_music": 0.5,
+        "vol_sfx": 0.8,
+        "graphics_preset": "Ultra",
+        "fps_cap": 60
+      }
+    }
+  }
+}

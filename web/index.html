@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>DAKSH BATTLE — PLAY • FIGHT • SURVIVE</title>
+  <meta name="description" content="DAKSH BATTLE: High-Octane 3D Battle Royale Game. Inspired by Free Fire. Play on Desktop and Mobile Browsers with WebGL.">
+  <meta name="theme-color" content="#0a0c10">
+  
+  <!-- Google Fonts: High-Tech Gaming & Esports Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700;800&family=Teko:wght@600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="/assets/game_logo.png">
+  
+  <!-- Three.js: Local Offline Copy First, with CDN Fallback -->
+  <script src="/web/libs/three.min.js"></script>
+  <script>
+    if (typeof THREE === 'undefined') {
+      document.write('<script src="https://unpkg.com/three@0.160.0/build/three.min.js"><\/script>');
+    }
+  </script>
+</head>
+<body>
+
+  <!-- Top Global Quick Bar (Desktop & Browser utility) -->
+  <nav class="global-quick-bar" id="global-quick-bar">
+    <div class="server-status-pill">
+      <span class="live-pulse-dot"></span>
+      <span class="server-text">SERVER ONLINE • ASIA-SOUTH (18ms)</span>
+    </div>
+    
+    <div class="quick-nav-actions">
+      <button class="quick-btn" id="btn-quick-guide" title="Controls &amp; Hotkeys">
+        <span>⌨️ CONTROLS</span>
+      </button>
+      <button class="quick-btn" id="btn-quick-audio" title="Toggle Sound">
+        <span id="audio-btn-icon">🔊 SOUND: ON</span>
+      </button>
+      <button class="quick-btn" id="btn-quick-fullscreen" title="Toggle Fullscreen">
+        <span>⛶ FULLSCREEN</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Low Health Red Pulsing Vignette Alert -->
+  <div id="low-hp-vignette" class="hidden"></div>
+
+  <!-- Landscape Lock Warning for Mobile -->
+  <div id="landscape-warning" class="hidden">
+    <div class="warning-box glass-panel">
+      <div class="rotate-phone-icon">📱 ➔ 🔄</div>
+      <h2>ROTATE YOUR DEVICE</h2>
+      <p>DAKSH BATTLE is optimized for Landscape orientation. Please rotate your device horizontally for the best combat experience!</p>
+    </div>
+  </div>
+
+  <!-- Screen 1: Splash / Website Landing Entry Screen -->
+  <div id="screen-splash" class="screen active">
+    <div class="splash-bg"></div>
+    <div class="vignette"></div>
+    <div class="dust-particles" id="dust-particles"></div>
+    
+    <div class="splash-content">
+      <div class="logo-wrapper">
+        <div class="season-badge">🔥 SEASON 12 • OPERATION CRIMSON STORM</div>
+        <img src="/assets/game_logo.png" alt="DAKSH BATTLE" class="game-logo pulse-glow">
+        <div class="tagline">PLAY • FIGHT • SURVIVE</div>
+        <div class="platform-badge">⚡ REAL 3D WEBGL BATTLE ROYALE • DESKTOP &amp; MOBILE COMPATIBLE</div>
+      </div>
+      
+      <div class="entry-actions-row">
+        <button id="btn-tap-continue" class="btn-tap-continue pulse-glow">
+          <span class="btn-icon">▶</span>
+          <span>ENTER BATTLE LOBBY</span>
+        </button>
+      </div>
+
+      <div class="splash-footer-notes">
+        <span>DAKSH BATTLE © 2026 • Official Original Battle Royale Experience</span>
+        <span>Zero Pay-to-Win • Pure Tactical Combat</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 2: Login & Authentication Screen -->
+  <div id="screen-login" class="screen hidden">
+    <div class="login-bg"></div>
+    <div class="vignette"></div>
+    
+    <div class="login-card glass-panel">
+      <div class="login-header">
+        <img src="/assets/game_logo.png" alt="DAKSH BATTLE" class="login-logo">
+        <div class="subtext">SELECT YOUR ACCESS PROTOCOL</div>
+      </div>
+
+      <div class="auth-tabs">
+        <button id="tab-guest" class="tab-btn active">GUEST / OFFLINE</button>
+        <button id="tab-login" class="tab-btn">SIGN IN</button>
+        <button id="tab-register" class="tab-btn">CREATE ACCOUNT</button>
+      </div>
+
+      <!-- Guest Mode View -->
+      <div id="view-guest" class="auth-view active">
+        <p class="desc">Jump straight into the battlefield. Zero credentials needed. Progress is saved locally in your current browser session.</p>
+        <div class="input-group">
+          <label>Display Name</label>
+          <input type="text" id="guest-username" value="Daksh_Battle" maxlength="16" autocomplete="off" spellcheck="false">
+        </div>
+        <button id="btn-guest-play" class="btn-gold-action">
+          <span>CONTINUE AS GUEST</span>
+        </button>
+        <div class="divider"><span>OR SECURE ACCESS</span></div>
+        <button id="btn-google-login" class="btn-google">
+          <span class="g-icon">G</span>
+          <span>Sign in with Google</span>
+        </button>
+      </div>
+
+      <!-- Sign In View -->
+      <div id="view-signin" class="auth-view hidden">
+        <div class="input-group">
+          <label>Username</label>
+          <input type="text" id="signin-username" placeholder="Enter username" maxlength="16" autocomplete="username">
+        </div>
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" id="signin-password" placeholder="Enter secure password" maxlength="24" autocomplete="current-password">
+        </div>
+        <div id="signin-error" class="error-msg hidden"></div>
+        <button id="btn-signin-submit" class="btn-gold-action">
+          <span>SIGN IN TO BATTLE</span>
+        </button>
+      </div>
+
+      <!-- Register View -->
+      <div id="view-register" class="auth-view hidden">
+        <div class="input-group">
+          <label>New Username (Letters, digits, _ only)</label>
+          <input type="text" id="register-username" placeholder="Choose unique username" maxlength="16" autocomplete="username">
+        </div>
+        <div class="input-group">
+          <label>New Password (Min 4 characters)</label>
+          <input type="password" id="register-password" placeholder="Create password" maxlength="24" autocomplete="new-password">
+        </div>
+        <p class="fresh-note">✨ Every new account starts with clean Level 1 progress, Bronze rank, 500 coins, and starter gear.</p>
+        <div id="register-error" class="error-msg hidden"></div>
+        <button id="btn-register-submit" class="btn-gold-action">
+          <span>CREATE FRESH ACCOUNT</span>
+        </button>
+      </div>
+
+      <div class="auth-footer">
+        <button id="btn-back-splash" class="btn-text">◀ BACK TO TITLE</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 3: Main Lobby Screen (Free Fire Inspired) -->
+  <div id="screen-lobby" class="screen hidden">
+    <div class="lobby-bg"></div>
+
+    <!-- Lobby Top Bar -->
+    <header class="lobby-topbar">
+      <!-- Player Profile Card -->
+      <div class="profile-card" id="btn-open-profile" title="View Profile">
+        <div class="avatar-frame">
+          <img src="/assets/char_male.png" alt="Avatar" class="avatar-img" id="lobby-avatar">
+          <span class="avatar-level-badge" id="lobby-level-badge">1</span>
+        </div>
+        <div class="profile-info">
+          <div class="name-row">
+            <span class="player-name" id="lobby-player-name">Daksh_Battle</span>
+            <span class="guest-pill" id="lobby-guest-pill">GUEST</span>
+          </div>
+          <div class="level-row">
+            <span class="level-badge" id="lobby-level">Lv.1</span>
+            <div class="xp-bar-container">
+              <div class="xp-fill" id="lobby-xp-fill" style="width: 25%;"></div>
+            </div>
+            <span class="xp-text" id="lobby-xp-text">250/1000</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Currencies (Coins & Diamonds) -->
+      <div class="currency-group">
+        <div class="currency-pill gold" title="Battle Gold">
+          <span class="icon">🪙</span>
+          <span class="amount" id="lobby-coins">500</span>
+          <span class="plus" id="btn-add-coins">+</span>
+        </div>
+        <div class="currency-pill diamond" title="Premium Diamonds">
+          <span class="icon">💎</span>
+          <span class="amount" id="lobby-diamonds">0</span>
+          <span class="plus" id="btn-add-diamonds">+</span>
+        </div>
+      </div>
+
+      <!-- Header Action Icons -->
+      <div class="top-actions">
+        <button class="icon-btn" id="btn-lobby-friends" title="Friends &amp; Squad">👥</button>
+        <button class="icon-btn" id="btn-lobby-mail" title="HQ Supply Mail">
+          ✉️<span class="badge-dot" id="mail-dot"></span>
+        </button>
+        <button class="icon-btn" id="btn-lobby-settings" title="Game Settings">⚙️</button>
+        <button class="icon-btn logout" id="btn-lobby-logout" title="Sign Out">🚪</button>
+      </div>
+    </header>
+
+    <!-- Lobby Announcements Ticker -->
+    <div class="lobby-announcement-bar">
+      <span class="ticker-tag">HQ BROADCAST</span>
+      <span class="ticker-text">⚡ WELCOME COMMANDER TO DAKSH BATTLE! SEASON 12 IS LIVE • DROP INTO BERMUDA ARENA NOW!</span>
+    </div>
+
+    <!-- Lobby Center Stage: 3D/2D Showcase -->
+    <main class="lobby-stage">
+      <div class="character-showcase">
+        <img src="/assets/player_character.png" alt="Daksh" class="showcase-character idle-breathe" id="showcase-char-img">
+        <img src="/assets/pet_panda.png" alt="Pet Panda" class="showcase-pet idle-hop" id="showcase-pet-img">
+        <div class="character-pedestal"></div>
+      </div>
+    </main>
+
+    <!-- Lobby Left Navigation Menu -->
+    <nav class="lobby-sidebar">
+      <button class="side-btn store" id="nav-store">
+        <span class="icon">🛒</span>
+        <span class="label">Store</span>
+      </button>
+      <button class="side-btn character" id="nav-character">
+        <span class="icon">👤</span>
+        <span class="label">Character</span>
+      </button>
+      <button class="side-btn armory" id="nav-armory">
+        <span class="icon">🔫</span>
+        <span class="label">Armory</span>
+      </button>
+      <button class="side-btn emotes" id="nav-emotes">
+        <span class="icon">🕺</span>
+        <span class="label">Emotes</span>
+      </button>
+    </nav>
+
+    <!-- Lobby Bottom Right Match Section -->
+    <section class="lobby-play-section">
+      <div class="rank-card" id="lobby-rank-card" title="Season Rank">
+        <img src="/assets/badge_bronze.png" alt="Rank" class="rank-badge-img" id="lobby-rank-badge">
+        <div class="rank-details">
+          <div class="rank-tier-row">
+            <span class="rank-name" id="lobby-rank-name">Bronze I</span>
+            <span class="rank-stars">★ ★ ★</span>
+          </div>
+          <div class="rank-score" id="lobby-rank-score">★ 0 RP</div>
+        </div>
+      </div>
+
+      <div class="mode-selector" id="btn-toggle-mode" title="Select Match Mode">
+        <span class="mode-tag">BATTLE ROYALE</span>
+        <span class="mode-name" id="selected-mode-text">Classic (Bermuda)</span>
+      </div>
+
+      <button id="btn-lobby-play" class="btn-play-gold pulse-glow">
+        <span class="play-text">PLAY</span>
+        <span class="play-subtext">SURVIVE &amp; CONQUER</span>
+      </button>
+    </section>
+  </div>
+
+  <!-- Dedicated Loading Screen with Animated Bar & Tips -->
+  <div id="screen-loading" class="screen hidden">
+    <div class="loading-bg"></div>
+    <div class="vignette"></div>
+    
+    <div class="loading-content glass-panel">
+      <img src="/assets/game_logo.png" alt="DAKSH BATTLE" class="loading-logo pulse-glow">
+      <h2 class="loading-title">DEPLOYING TO BATTLE ARENA</h2>
+      
+      <div class="loading-bar-track">
+        <div class="loading-bar-fill" id="loading-bar-fill" style="width: 15%;"></div>
+      </div>
+      
+      <div class="loading-status-row">
+        <span id="loading-status-text">INITIALIZING 3D TERRAIN &amp; COMBATANTS...</span>
+        <span id="loading-pct-text">15%</span>
+      </div>
+
+      <div class="loading-tip-card">
+        <span class="tip-badge">SURVIVAL TIP</span>
+        <p class="tip-text" id="loading-tip-text">Headshots inflict 1.5x critical tag damage! Aim carefully when engaging distant rivals.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 4: 3D Battle Arena Viewport -->
+  <div id="screen-game" class="screen hidden">
+    <!-- WebGL Canvas Container -->
+    <div id="webgl-container"></div>
+
+    <!-- In-Game Battle HUD -->
+    <div id="game-hud">
+      <!-- Top Left: Minimap & Safe Zone Warning -->
+      <div class="minimap-container">
+        <div class="minimap-wrapper">
+          <canvas id="minimap-canvas" width="130" height="130"></canvas>
+          <div class="minimap-border"></div>
+          <div class="minimap-grid-tag">PEAK (B-4)</div>
+        </div>
+        <div class="zone-timer-pill" id="hud-zone-timer">⚠️ SAFE ZONE: 35s</div>
+      </div>
+
+      <!-- Top Center: Tactical Survival Compass -->
+      <div class="compass-bar">
+        <div class="compass-tape" id="compass-tape">
+          <span>15</span><span>30</span><span>NE</span><span>60</span><span>75</span><span>E</span>
+          <span>105</span><span>120</span><span>SE</span><span>150</span><span>165</span><span>S</span>
+          <span>195</span><span>210</span><span>SW</span><span>240</span><span>255</span><span>W</span>
+          <span>285</span><span>300</span><span>NW</span><span>330</span><span>345</span><span>N</span>
+        </div>
+        <div class="compass-needle">▼</div>
+      </div>
+
+      <!-- Top Right: Battle Killfeed & Match Counters -->
+      <div class="top-right-hud-group">
+        <div class="battle-stats-card">
+          <div class="stat-pill alive" title="Combatants Alive">
+            <span class="icon">👥</span>
+            <span class="val" id="hud-alive-count">10</span>
+            <span class="lbl">ALIVE</span>
+          </div>
+          <div class="stat-pill kills" title="Your Eliminations">
+            <span class="icon">☠️</span>
+            <span class="val" id="hud-kill-count">0</span>
+            <span class="lbl">KILLS</span>
+          </div>
+          <button class="btn-hud-pause" id="btn-hud-pause" title="Pause Match">⏸️</button>
+        </div>
+
+        <!-- Live Killfeed Ticker -->
+        <div class="killfeed-container" id="killfeed-container">
+          <div class="killfeed-entry default-entry">
+            <span>⚔️ MATCH STARTED • 10 SURVIVORS DEPLOYED</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center: Crosshair, Hitmarker & Damage Numbers -->
+      <div class="crosshair-wrapper">
+        <div class="crosshair" id="crosshair">
+          <div class="ch-line ch-top"></div>
+          <div class="ch-line ch-bottom"></div>
+          <div class="ch-line ch-left"></div>
+          <div class="ch-line ch-right"></div>
+          <div class="ch-dot"></div>
+        </div>
+        <div class="hitmarker hidden" id="hitmarker">✕</div>
+        <div id="damage-popup-container"></div>
+      </div>
+
+      <!-- Bottom Center: Health (200) & Armor (100) Bars -->
+      <div class="vital-bars">
+        <div class="shield-bar-wrapper">
+          <span class="vital-icon">🛡️</span>
+          <div class="bar-outer">
+            <div class="bar-fill shield-fill" id="hud-shield-fill" style="width: 100%;"></div>
+          </div>
+          <span class="vital-text" id="hud-shield-text">100/100</span>
+        </div>
+        <div class="hp-bar-wrapper">
+          <span class="vital-icon">❤️</span>
+          <div class="bar-outer">
+            <div class="bar-fill hp-fill" id="hud-hp-fill" style="width: 100%;"></div>
+          </div>
+          <span class="vital-text" id="hud-hp-text">200/200</span>
+        </div>
+      </div>
+
+      <!-- Bottom Right: Free Fire Style Weapon Card -->
+      <div class="weapon-hud-card">
+        <div class="weapon-slot-toggle">
+          <button class="slot-tab active" data-slot="0" id="slot-0">1 AR</button>
+          <button class="slot-tab" data-slot="1" id="slot-1">2 SMG</button>
+          <button class="slot-tab" data-slot="2" id="slot-2">3 PISTOL</button>
+        </div>
+        <div class="weapon-body">
+          <div class="weapon-info">
+            <span class="weapon-name" id="hud-weapon-name">Crimson Blaze</span>
+            <span class="weapon-category" id="hud-weapon-cat">ASSAULT RIFLE</span>
+          </div>
+          <div class="ammo-display">
+            <span class="cur-ammo" id="hud-ammo-cur">30</span>
+            <span class="slash">/</span>
+            <span class="res-ammo" id="hud-ammo-res">120</span>
+          </div>
+        </div>
+        <div class="reload-progress-bar hidden" id="hud-reload-bar">
+          <div class="reload-fill" id="hud-reload-fill"></div>
+          <span class="reload-label">RELOADING...</span>
+        </div>
+      </div>
+
+      <!-- Mobile Touch Controls Overlay -->
+      <div id="mobile-controls-overlay">
+        <!-- Floating Movement Joystick Zone -->
+        <div id="joystick-zone">
+          <div id="joystick-base">
+            <div id="joystick-stick"></div>
+          </div>
+        </div>
+
+        <!-- Camera Swipe Zone on Right Screen -->
+        <div id="touch-look-zone"></div>
+
+        <!-- Action Touch Buttons Cluster -->
+        <div class="touch-actions-cluster">
+          <!-- Weapon Slot Quick Switch on Mobile -->
+          <div class="touch-weapon-slots">
+            <button class="touch-slot-btn active" id="btn-touch-slot-0" data-slot="0">AR (1)</button>
+            <button class="touch-slot-btn" id="btn-touch-slot-1" data-slot="1">SMG (2)</button>
+            <button class="touch-slot-btn" id="btn-touch-slot-2" data-slot="2">PISTOL (3)</button>
+          </div>
+
+          <div class="touch-buttons-row">
+            <button class="touch-btn btn-crouch" id="btn-touch-crouch" title="Crouch">🧎</button>
+            <button class="touch-btn btn-sprint" id="btn-touch-sprint" title="Sprint">⚡</button>
+            <button class="touch-btn btn-reload" id="btn-touch-reload" title="Reload">🔄</button>
+            <button class="touch-btn btn-emote" id="btn-touch-emote" title="Emote">🕺</button>
+            <button class="touch-btn btn-jump" id="btn-touch-jump" title="Jump">⏫</button>
+            <button class="touch-btn btn-scope" id="btn-touch-scope" title="Aim / Scope">🎯</button>
+            <button class="touch-btn btn-fire" id="btn-touch-fire" title="Fire Weapon">🔥</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 5: Match Results (Victory / Defeat) -->
+  <div id="screen-results" class="screen hidden">
+    <div class="results-backdrop"></div>
+    <div class="results-card glass-panel" id="results-card">
+      <div class="results-header" id="results-header">
+        <h1 class="results-title gold-glow" id="results-title">BOOYAH!</h1>
+        <div class="results-subtitle" id="results-subtitle">#1 VICTORY ROYALE</div>
+      </div>
+
+      <div class="results-body">
+        <div class="stat-grid">
+          <div class="result-stat-box">
+            <span class="stat-label">ELIMINATIONS</span>
+            <span class="stat-number gold-glow" id="res-kills">4</span>
+          </div>
+          <div class="result-stat-box">
+            <span class="stat-label">SURVIVAL TIME</span>
+            <span class="stat-number" id="res-time">02:45</span>
+          </div>
+          <div class="result-stat-box">
+            <span class="stat-label">TOTAL SCORE</span>
+            <span class="stat-number gold-glow" id="res-score">+120</span>
+          </div>
+        </div>
+
+        <div class="rewards-row">
+          <div class="reward-pill">🪙 +<span id="res-coins">450</span> Coins</div>
+          <div class="reward-pill">✨ +<span id="res-xp">150</span> XP</div>
+          <div class="reward-pill">💎 +<span id="res-diamonds">5</span> Diamonds</div>
+        </div>
+
+        <div class="rank-progress-box">
+          <div class="rank-name-row">
+            <span id="res-rank-name">Bronze II</span>
+            <span id="res-rank-points">+35 RP</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="res-rank-fill" style="width: 45%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="results-footer">
+        <button id="btn-res-lobby" class="btn-gold-action">BACK TO LOBBY</button>
+        <button id="btn-res-replay" class="btn-blue-action">PLAY AGAIN</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Overlays -->
+  <div id="modal-container" class="hidden">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+
+    <!-- Modal: Controls Guide -->
+    <div class="modal-dialog hidden" id="modal-guide">
+      <div class="modal-header">
+        <h2>BATTLE ROYALE CONTROLS GUIDE</h2>
+        <button class="btn-close-modal" data-close="modal-guide">✕</button>
+      </div>
+      <div class="guide-content">
+        <div class="guide-section">
+          <h3>🖥️ Desktop Controls (Keyboard &amp; Mouse)</h3>
+          <div class="controls-grid">
+            <div class="ctrl-row"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>Move Survivor</span></div>
+            <div class="ctrl-row"><kbd>Mouse</kbd><span>Aim / Rotate Camera (Click to lock)</span></div>
+            <div class="ctrl-row"><kbd>Left Click</kbd><span>Fire Equipped Weapon</span></div>
+            <div class="ctrl-row"><kbd>Right Click</kbd><span>Aim Down Sights (ADS Zoom)</span></div>
+            <div class="ctrl-row"><kbd>Space</kbd><span>Jump</span></div>
+            <div class="ctrl-row"><kbd>Shift</kbd><span>Sprint / Fast Run</span></div>
+            <div class="ctrl-row"><kbd>C</kbd><span>Crouch (Tactical low stance)</span></div>
+            <div class="ctrl-row"><kbd>R</kbd><span>Reload Magazine</span></div>
+            <div class="ctrl-row"><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd><span>Switch Weapon Slots (AR / SMG / Pistol)</span></div>
+            <div class="ctrl-row"><kbd>B</kbd><span>Trigger Emote / Dance</span></div>
+            <div class="ctrl-row"><kbd>Esc</kbd><span>Pause Match / Settings</span></div>
+          </div>
+        </div>
+        <div class="guide-section">
+          <h3>📱 Mobile Touch Controls</h3>
+          <p>Hold device in <strong>Landscape mode</strong>. Use the floating virtual joystick on the left screen to run. Swipe on the right screen to aim. Tap the action buttons for Fire, Scope, Jump, Crouch, Sprint, and Reload.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Armory -->
+    <div class="modal-dialog hidden" id="modal-armory">
+      <div class="modal-header">
+        <h2>WEAPON ARMORY</h2>
+        <button class="btn-close-modal" data-close="modal-armory">✕</button>
+      </div>
+      <div class="armory-tabs">
+        <button class="arm-tab active" data-cat="AR">Assault Rifles</button>
+        <button class="arm-tab" data-cat="SMG">SMGs</button>
+        <button class="arm-tab" data-cat="Shotgun">Shotguns</button>
+        <button class="arm-tab" data-cat="Pistol">Pistols</button>
+        <button class="arm-tab" data-cat="Sniper">Sniper Rifles</button>
+      </div>
+      <div class="armory-content">
+        <div class="weapon-list" id="armory-weapon-list">
+          <!-- Dynamically populated -->
+        </div>
+        <div class="weapon-detail-panel" id="weapon-detail-panel">
+          <h3 id="arm-detail-name">Crimson Blaze</h3>
+          <span class="weapon-badge-tier" id="arm-detail-tier">EPIC ASSAULT RIFLE</span>
+          <p id="arm-detail-desc">Legendary burst rifle engineered for mid-to-long range supremacy.</p>
+          <div class="stat-bars">
+            <div class="stat-bar-item">
+              <span>DAMAGE</span>
+              <div class="stat-track"><div class="stat-fill" id="stat-bar-damage" style="width: 34%;"></div></div>
+            </div>
+            <div class="stat-bar-item">
+              <span>FIRE RATE</span>
+              <div class="stat-track"><div class="stat-fill" id="stat-bar-rate" style="width: 85%;"></div></div>
+            </div>
+            <div class="stat-bar-item">
+              <span>RANGE</span>
+              <div class="stat-track"><div class="stat-fill" id="stat-bar-range" style="width: 70%;"></div></div>
+            </div>
+            <div class="stat-bar-item">
+              <span>ACCURACY</span>
+              <div class="stat-track"><div class="stat-fill" id="stat-bar-acc" style="width: 78%;"></div></div>
+            </div>
+          </div>
+          <button id="btn-equip-weapon" class="btn-gold-action">EQUIP TO LOADOUT</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Settings & Pause Menu -->
+    <div class="modal-dialog hidden" id="modal-settings">
+      <div class="modal-header">
+        <h2>SYSTEM SETTINGS</h2>
+        <button class="btn-close-modal" data-close="modal-settings">✕</button>
+      </div>
+      <div class="settings-body">
+        <div class="setting-group">
+          <label>Graphics Quality</label>
+          <div class="pill-selector" id="setting-graphics">
+            <button class="pill-opt" data-val="Smooth">Smooth</button>
+            <button class="pill-opt active" data-val="Normal">Normal</button>
+            <button class="pill-opt" data-val="Ultra">Ultra</button>
+          </div>
+        </div>
+
+        <div class="setting-group">
+          <label>Target FPS Cap</label>
+          <div class="pill-selector" id="setting-fps">
+            <button class="pill-opt" data-val="30">30</button>
+            <button class="pill-opt active" data-val="60">60</button>
+            <button class="pill-opt" data-val="120">120</button>
+            <button class="pill-opt" data-val="0">MAX</button>
+          </div>
+        </div>
+
+        <div class="setting-group">
+          <label>Aim Sensitivity: <span id="val-sens">0.20</span></label>
+          <input type="range" id="slider-sens" min="0.05" max="0.80" step="0.05" value="0.20">
+        </div>
+
+        <div class="setting-group">
+          <label>Master Volume: <span id="val-vol-master">70%</span></label>
+          <input type="range" id="slider-vol-master" min="0" max="1" step="0.05" value="0.70">
+        </div>
+
+        <div class="setting-group">
+          <label>SFX &amp; Gunfire: <span id="val-vol-sfx">80%</span></label>
+          <input type="range" id="slider-vol-sfx" min="0" max="1" step="0.05" value="0.80">
+        </div>
+
+        <div class="setting-group">
+          <label>Music Volume: <span id="val-vol-music">50%</span></label>
+          <input type="range" id="slider-vol-music" min="0" max="1" step="0.05" value="0.50">
+        </div>
+
+        <div class="settings-actions">
+          <button id="btn-settings-reset" class="btn-text">RESET DEFAULTS</button>
+          <button id="btn-settings-save" class="btn-gold-action">SAVE SETTINGS</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Emotes Wheel -->
+    <div class="modal-dialog hidden" id="modal-emotes">
+      <div class="modal-header">
+        <h2>EMOTES &amp; CELEBRATIONS</h2>
+        <button class="btn-close-modal" data-close="modal-emotes">✕</button>
+      </div>
+      <div class="emotes-grid">
+        <button class="emote-card" data-emote="wave">
+          <div class="emote-icon">👋</div>
+          <div class="emote-label">Wave</div>
+        </button>
+        <button class="emote-card" data-emote="dance">
+          <div class="emote-icon">🕺</div>
+          <div class="emote-label">Victory Dance</div>
+        </button>
+        <button class="emote-card" data-emote="celebration">
+          <div class="emote-icon">🎉</div>
+          <div class="emote-label">Celebration</div>
+        </button>
+        <button class="emote-card" data-emote="thumbs_up">
+          <div class="emote-icon">👍</div>
+          <div class="emote-label">Thumbs Up</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal: Character Roster -->
+    <div class="modal-dialog hidden" id="modal-character">
+      <div class="modal-header">
+        <h2>CHOOSE SURVIVOR</h2>
+        <button class="btn-close-modal" data-close="modal-character">✕</button>
+      </div>
+      <div class="characters-grid">
+        <div class="char-card active" data-char="Daksh">
+          <img src="/assets/char_male.png" alt="Daksh">
+          <h3>DAKSH</h3>
+          <span class="role-tag">ASSAULT SPECIALIST</span>
+          <p>Increases weapon reload speed by 15% and initial shield stability.</p>
+          <button class="btn-select-char">SELECTED</button>
+        </div>
+        <div class="char-card" data-char="Maya">
+          <img src="/assets/char_female.png" alt="Maya">
+          <h3>MAYA</h3>
+          <span class="role-tag">TACTICAL SCOUT</span>
+          <p>Boosts sprint speed by 10% and safe-zone damage resistance.</p>
+          <button class="btn-select-char">SELECT</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Mail Supply Drop -->
+    <div class="modal-dialog hidden" id="modal-mail">
+      <div class="modal-header">
+        <h2>BATTLE ROYALE HQ MAIL</h2>
+        <button class="btn-close-modal" data-close="modal-mail">✕</button>
+      </div>
+      <div class="mail-body">
+        <div class="mail-letter">
+          <h3>🎁 Welcome Commander to DAKSH BATTLE!</h3>
+          <p>Your tactical combat training begins now. Equip your weapons in the Armory, customize your sensitivity, and dominate the island.</p>
+          <div class="mail-rewards">
+            <span class="reward">🪙 +2,500 Gold Coins</span>
+            <span class="reward">💎 +50 Diamonds</span>
+          </div>
+          <button id="btn-claim-mail" class="btn-gold-action">CLAIM SUPPLY CRATE</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Google OAuth Info Dialog -->
+    <div class="modal-dialog hidden" id="modal-google-info">
+      <div class="modal-header">
+        <h2>GOOGLE SIGN-IN PROTOCOL</h2>
+        <button class="btn-close-modal" data-close="modal-google-info">✕</button>
+      </div>
+      <div class="oauth-info-body">
+        <div class="info-icon">ℹ️</div>
+        <h3>Google OAuth 2.0 Status</h3>
+        <p id="google-status-msg">Google OAuth 2.0 requires active client_id and redirect_uri configured in backend auth_manager.py.</p>
+        <p class="safe-note">To protect account security, DAKSH BATTLE never stores credentials in plaintext or uses unverified third-party sign-ins. You can play right away using <strong>Continue as Guest</strong> or <strong>Create Account</strong>.</p>
+        <button class="btn-gold-action" data-close="modal-google-info">UNDERSTOOD</button>
+      </div>
+    </div>
+
+    <!-- Generic In-Game Pause Modal -->
+    <div class="modal-dialog hidden" id="modal-pause">
+      <div class="modal-header">
+        <h2>MATCH PAUSED</h2>
+      </div>
+      <div class="pause-actions">
+        <button id="btn-pause-resume" class="btn-gold-action">RESUME MATCH</button>
+        <button id="btn-pause-settings" class="btn-blue-action">SETTINGS</button>
+        <button id="btn-pause-lobby" class="btn-text">RETURN TO LOBBY</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- Main Game Engine Logic -->
+  <script src="game.js"></script>
+</body>
+</html>

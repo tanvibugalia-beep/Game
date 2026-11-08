@@ -1,0 +1,19 @@
+{
+  "username": "Daksh_Battle",
+  "is_logged_in": true,
+  "auth_provider": "guest",
+  "level": 16,
+  "xp": 1400,
+  "xp_next": 6250,
+  "rank_name": "Diamond I",
+  "rank_score": 2590,
+  "coins": 16450,
+  "diamonds": 305,
+  "selected_character": "Daksh",
+  "selected_weapon": "Crimson Blaze",
+  "selected_mode": "Battle Royale Classic",
+  "matches_played": 46,
+  "wins": 22,
+  "kills": 160,
+  "mail_claimed": false
+}
